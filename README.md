@@ -10,4 +10,10 @@ Feel free to use this.<br>
 5. Open `index.html` in your browser: `open index.html`.
 
 Gulp Dependencies:
-- 
+- `gulp-clean-css`
+- `gulp-rename`
+- `gulp-sass`
+- `gulp-uglify`
+- `gulp-watch`
+
+Happy Coding.
