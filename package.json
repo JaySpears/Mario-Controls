@@ -1,0 +1,25 @@
+{
+  "name": "dev-members",
+  "version": "1.0.0",
+  "description": "Collection of members for Ansira's development team.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Joshua Spears",
+  "license": "ISC",
+  "devDependencies": {
+    "express-handlebars": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.8",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.1",
+    "gulp-uglify": "^1.5.3",
+    "gulp-watch": "^4.3.6",
+    "mysql": "^2.10.2",
+    "path": "^0.12.7"
+  },
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}

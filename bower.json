@@ -1,0 +1,22 @@
+{
+  "name": "Playground",
+  "description": "Playground for JavaScript.",
+  "main": "index.js",
+  "authors": [
+    "Joshua Spears"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.0.0",
+    "normalize-css": "normalize.css#~4.1.1"
+  }
+}
