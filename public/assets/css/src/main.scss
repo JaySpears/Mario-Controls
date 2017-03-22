@@ -3,7 +3,45 @@
     clear: both;
     content: '';
 }
-
+body{
+}
 .container {
+  width: 100%;
+  // text-align: center;
+  .portrait-container{
+    .head-one{
+      width: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 3;
+    }
+    .head-two{
+      width: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+    }
+    .left-eye{
+      position: absolute;
+      z-index: 2;
+      top: 327px;
+      left: 736px;
+      height: 32px;
+      img{
+        width: 32px;
+      }
+    }
+    .right-eye{
+      position: absolute;
+      z-index: 2;
+      top: 353px;
+      left: 894px;
+      height: 32px;
+      img{
+        width: 32px;
+      }
+    }
 
+
+  }
 }
