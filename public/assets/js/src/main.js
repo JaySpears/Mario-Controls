@@ -1,29 +1,143 @@
 'use strict';
-(function ($) {
-    $(document).ready(function(){
-      var leftEye = $('.portrait-container img.left-eye');
-      var leftEyeOffset = leftEye.offset();
-      var rightEye = $('.portrait-container img.right-eye');
-      var rightEyeOffset = rightEye.offset();
-      $(document).mousemove(function(event){
-        var leftEyeCenterX = (leftEyeOffset.left) + (leftEye.width()/2);
-        var leftEyeCenterY = (leftEyeOffset.top) + (leftEye.height()/2);
-        var rightEyeCenterX = (rightEyeOffset.left) + (rightEye.width()/2);
-        var rightEyeCenterY = (rightEyeOffset.top) + (rightEye.height()/2);
-        var mouseX = event.pageX;
-        var mouseY = event.pageY;
-        var radiansForLeftEye = Math.atan2(mouseX - leftEyeCenterX, mouseY - leftEyeCenterY);
-        var degreesForLeftEye = (radiansForLeftEye * (180 / Math.PI) * -1) + 90;
-        var radiansForRightEye = Math.atan2(mouseX - rightEyeCenterX, mouseY - rightEyeCenterY);
-        var degreesForRightEye = (radiansForRightEye * (180 / Math.PI) * -1) + 90;
-        leftEye.css('-moz-transform', 'rotate('+degreesForLeftEye+'deg)');
-        leftEye.css('-webkit-transform', 'rotate('+degreesForLeftEye+'deg)');
-        leftEye.css('-o-transform', 'rotate('+degreesForLeftEye+'deg)');
-        leftEye.css('-ms-transform', 'rotate('+degreesForLeftEye+'deg)');
-        rightEye.css('-moz-transform', 'rotate('+degreesForRightEye+'deg)');
-        rightEye.css('-webkit-transform', 'rotate('+degreesForRightEye+'deg)');
-        rightEye.css('-o-transform', 'rotate('+degreesForRightEye+'deg)');
-        rightEye.css('-ms-transform', 'rotate('+degreesForRightEye+'deg)');
+(function($) {
+  $(document).ready(function() {
+    // Variables.
+    var person = $('#person');
+    var customTrigger = false;
+    var moveForwardInterval = undefined;
+    var moveBackwardsInterval = undefined;
+    var leftPressed = false;
+    var rightPressed = false;
+    var currentlyJumping = false;
+    var characterMovements = {
+      moveFoward: moveFoward,
+      moveBackwards: moveBackwards,
+      jump: jump
+    }
+
+    //////////////////////////
+    // Function Declartions //
+    //////////////////////////
+
+    function moveFoward(){
+      person.offset({
+        left: person.offset().left + 4
       });
+    }
+
+    function moveBackwards(){
+      person.offset({
+        left: person.offset().left - 4
+      });
+    }
+
+    function jump(){
+      currentlyJumping = true;
+      person.addClass('jump');
+      setTimeout(function() {
+        currentlyJumping = false;
+        person.removeClass('jump');
+      }, 1400);
+    }
+
+    // This function will manually trigger keydown events. Need to keep the
+    // character moving when jump is activated.
+    function triggerEvent(arrow){
+      customTrigger = true;
+      switch (arrow){
+        case 'right':
+          var e = jQuery.Event('keydown');
+          e.keyCode = 39;
+          $(document).trigger(e);
+          break;
+
+        case 'left':
+          var e = jQuery.Event('keydown');
+          e.keyCode = 37;
+          $(document).trigger(e);
+          break;
+
+        default:
+          return;
+      }
+    }
+
+    // Keydown events.
+    $(document).keydown(function(e) {
+      switch (e.which || e.keyCode) {
+        //// JUMP ////
+        case 32:
+          if (!currentlyJumping) {
+            characterMovements.jump();
+          }
+          if (rightPressed) {
+            triggerEvent('right');
+          }
+          if (leftPressed) {
+            triggerEvent('left');
+          }
+          break;
+
+        //// LEFT ////
+        case 37:
+          if (!leftPressed) {
+            moveBackwardsInterval = setInterval(function () {
+              characterMovements.moveBackwards();
+            }, 40);
+          }
+          leftPressed = true;
+          break;
+
+        //// RIGHT ////
+        case 39:
+          // rightPressed = true;
+          if (!rightPressed) {
+            moveForwardInterval = setInterval(function () {
+              characterMovements.moveFoward();
+            }, 40);
+          }
+          rightPressed = true;
+          break;
+
+        default:
+          return;
+      }
+      e.preventDefault();
     });
+
+    // Keyup events.
+    $(document).keyup(function(e) {
+      switch (e.which || e.keyCode) {
+        //// JUMP ////
+        case 32:
+          if (rightPressed) {
+            triggerEvent('right');
+          } else if (leftPressed){
+            triggerEvent('left');
+          }
+          break;
+
+        //// LEFT ////
+        case 37:
+          leftPressed = false;
+          clearInterval(moveBackwardsInterval);
+          person.offset({
+            left: person.offset().left
+          });
+          break;
+
+        //// RIGHT ////
+        case 39:
+          rightPressed = false;
+          clearInterval(moveForwardInterval);
+          person.offset({
+            left: person.offset().left
+          });
+          break;
+
+        default:
+          return;
+      }
+    });
+  });
 })(jQuery);
