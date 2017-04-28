@@ -3,7 +3,7 @@
     bottom:180px;
   }
   50% {
-    bottom:250px;
+    bottom:300px;
   }
   100% {
     bottom:180px;
@@ -39,8 +39,8 @@
       -webkit-animation: hop 1.3s;
       -moz-animation:    hop 1.3;
       -o-animation:      hop 1.3s;
-      animation:         hop 1.3s;
-      animation-timing-function: ease-in-out;
+      animation:         hop 1.6s;
+      animation-timing-function: cubic-bezier(0.4,0.2,.3,1);
     }
   }
 }

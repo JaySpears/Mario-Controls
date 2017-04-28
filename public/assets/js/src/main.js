@@ -9,6 +9,7 @@
     var leftPressed = false;
     var rightPressed = false;
     var currentlyJumping = false;
+    var dominantKeycode = undefined;
     var characterMovements = {
       moveFoward: moveFoward,
       moveBackwards: moveBackwards,
@@ -37,7 +38,7 @@
       setTimeout(function() {
         currentlyJumping = false;
         person.removeClass('jump');
-      }, 1400);
+      }, 1600);
     }
 
     // This function will manually trigger keydown events. Need to keep the
@@ -76,6 +77,12 @@
           if (leftPressed) {
             triggerEvent('left');
           }
+          if (rightPressed && leftPressed && dominantKeycode == 39) {
+            triggerEvent('right');
+          }
+          if (rightPressed && leftPressed && dominantKeycode == 37) {
+            triggerEvent('left');
+          }
           break;
 
         //// LEFT ////
@@ -85,16 +92,21 @@
               characterMovements.moveBackwards();
             }, 40);
           }
+          if (rightPressed){
+            clearInterval(moveForwardInterval);
+          }
           leftPressed = true;
           break;
 
         //// RIGHT ////
         case 39:
-          // rightPressed = true;
           if (!rightPressed) {
             moveForwardInterval = setInterval(function () {
               characterMovements.moveFoward();
             }, 40);
+          }
+          if (leftPressed){
+            clearInterval(moveBackwardsInterval);
           }
           rightPressed = true;
           break;
@@ -124,6 +136,13 @@
           person.offset({
             left: person.offset().left
           });
+          if (rightPressed){
+            dominantKeycode = 39;
+            clearInterval(moveForwardInterval);
+            moveForwardInterval = setInterval(function () {
+              characterMovements.moveFoward();
+            }, 40);
+          }
           break;
 
         //// RIGHT ////
@@ -133,6 +152,13 @@
           person.offset({
             left: person.offset().left
           });
+          if (leftPressed){
+            dominantKeycode = 37;
+            clearInterval(moveBackwardsInterval);
+            moveBackwardsInterval = setInterval(function () {
+              characterMovements.moveBackwards();
+            }, 40);
+          }
           break;
 
         default:
