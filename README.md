@@ -1,8 +1,6 @@
 # Mario Control Simulation
 
 ### Controls.
- - Left arrow
- - Right arrow
- - Down arrow
- - Up arrow
- - Space bar
+ - Left arrow (Move left)
+ - Right arrow (Move right)
+ - Space bar (Jump)
