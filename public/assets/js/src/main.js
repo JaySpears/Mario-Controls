@@ -38,7 +38,7 @@
       setTimeout(function() {
         currentlyJumping = false;
         person.removeClass('jump');
-      }, 1600);
+      }, 1500);
     }
 
     // This function will manually trigger keydown events. Need to keep the
